@@ -14,6 +14,6 @@ wget -N https://raw.githubusercontent.com/wyx2685/ppanel-node/master/Scripts/ins
 ## 构建
 ``` bash
 # 通过-tags选项指定要编译的内核， 可选 xray，sing
-go build -v -o ./node -tags "xray sing with_reality_server with_quic with_grpc with_utls with_wireguard with_acme" -trimpath -ldflags "-s -w -buildid="
+go build -v -o ./node -tags "xray sing with_quic with_grpc with_utls with_wireguard with_acme" -trimpath -ldflags "-s -w -buildid="
 ```
 

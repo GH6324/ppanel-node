@@ -125,13 +125,13 @@ jobs:
         run: |
           echo "version: $version"
           mkdir -p build_assets
-          go build -v -o build_assets/ppnode -tags "sing xray with_reality_server with_quic with_grpc with_utls with_wireguard with_acme with_gvisor" -trimpath -ldflags "-X 'github.com/perfect-panel/ppanel-node/cmd.version=$version' -s -w -buildid="
+          go build -v -o build_assets/ppnode -tags "sing xray with_quic with_grpc with_utls with_wireguard with_acme with_gvisor" -trimpath -ldflags "-X 'github.com/perfect-panel/ppanel-node/cmd.version=$version' -s -w -buildid="
 
       - name: Build Mips softfloat
         if: matrix.goarch == 'mips' || matrix.goarch == 'mipsle'
         run: |
           echo "version: $version"
-          GOMIPS=softfloat go build -v -o build_assets/ppnode_softfloat -tags "sing xray with_reality_server with_quic with_grpc with_utls with_wireguard with_acme with_gvisor" -trimpath -ldflags "-X 'github.com/perfect-panel/ppanel-node/cmd.version=$version' -s -w -buildid="
+          GOMIPS=softfloat go build -v -o build_assets/ppnode_softfloat -tags "sing xray with_quic with_grpc with_utls with_wireguard with_acme with_gvisor" -trimpath -ldflags "-X 'github.com/perfect-panel/ppanel-node/cmd.version=$version' -s -w -buildid="
       - name: Rename Windows
         if: matrix.goos == 'windows'
         run: |
