@@ -28,6 +28,7 @@ type CommonNode struct {
 	Vmess       *VmessNode
 	Shadowsocks *ShadowsocksNode
 	Trojan      *TrojanNode
+	AnyTLS      *AnyTLSNode
 	Tuic        *TuicNode
 	Hysteria2   *Hysteria2Node
 }
@@ -49,9 +50,13 @@ type SecurityConfig struct {
 }
 
 type TransportConfig struct {
-	Path        string `json:"path"`
-	Host        string `json:"host"`
-	ServiceName string `json:"service_name"`
+	Path                 string `json:"path"`
+	Host                 string `json:"host"`
+	ServiceName          string `json:"service_name"`
+	DisableSNI           bool   `json:"disable_sni"`
+	ReduceRtt            bool   `json:"reduce_rtt"`
+	UDPRelayMode         string `json:"udp_relay_mode"`
+	CongestionController string `json:"congestion_controller"`
 }
 
 type VlessNode struct {
@@ -83,6 +88,11 @@ type TrojanNode struct {
 	TransportConfig *TransportConfig `json:"transport_config"`
 	Security        string           `json:"security"`
 	SecurityConfig  *SecurityConfig  `json:"security_config"`
+}
+
+type AnyTLSNode struct {
+	Port           int             `json:"port"`
+	SecurityConfig *SecurityConfig `json:"security_config"`
 }
 
 type TuicNode struct {
@@ -176,6 +186,9 @@ func (c *Client) GetNodeInfo() (node *NodeInfo, err error) {
 	case "hysteria2":
 		node.Common.Hysteria2 = &Hysteria2Node{}
 		err = json.Unmarshal(node.Common.Config, node.Common.Hysteria2)
+	case "anytls":
+		node.Common.AnyTLS = &AnyTLSNode{}
+		err = json.Unmarshal(node.Common.Config, node.Common.AnyTLS)
 	default:
 		err = fmt.Errorf("unknown protocol:%s", node.Common.Protocol)
 	}

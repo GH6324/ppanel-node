@@ -155,6 +155,9 @@ add_node_config() {
         echo -e "${green}5. Hysteria2${plain}"
     fi
     echo -e "${green}6. Trojan${plain}"  
+    if [ "$core_sing" == true ]; then
+        echo -e "${green}7. AnyTLS${plain}"
+    fi
     read -rp "请输入：" NodeType
     case "$NodeType" in
         1 ) NodeType="shadowsocks" ;;
@@ -163,12 +166,14 @@ add_node_config() {
         4 ) NodeType="tuic" ;;
         5 ) NodeType="hysteria2" ;;
         6 ) NodeType="trojan" ;;
+        7 ) NodeType="anytls" ;;
         * ) NodeType="shadowsocks" ;;
     esac
 
     if [ "$NodeType" == "vless" ]; then
         read -rp "请选择是否为reality节点？(y/n)" isreality
-    elif [[ "$NodeType" == "hysteria2" || "$NodeType" == "tuic" || "$NodeType" == "trojan" ]]; then
+    elif [ "$NodeType" == "hysteria2" ] || [ "$NodeType" == "tuic" ] || [ "$NodeType" == "anytls" ]; then
+        fastopen=false
         istls="y"
     fi
 
@@ -431,10 +436,10 @@ EOF
     "servers": [
       {
         "tag": "cf",
-        "address": "1.1.1.1",
-        "strategy": "prefer_ipv4"
+        "address": "1.1.1.1"
       }
-    ]
+    ],
+    "strategy": "prefer_ipv4"
   },
   "outbounds": [
     {

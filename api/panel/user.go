@@ -19,7 +19,6 @@ type UserInfo struct {
 }
 
 type UserListBody struct {
-	//Msg  string `json:"msg"`
 	Users []UserInfo `json:"users"`
 }
 
@@ -31,7 +30,6 @@ type AliveMap struct {
 	Alive map[int]int `json:"alive"`
 }
 
-// GetUserList will pull user from v2board
 func (c *Client) GetUserList() ([]UserInfo, error) {
 	const path = "/v1/server/user"
 	r, err := c.client.R().
@@ -58,7 +56,6 @@ func (c *Client) GetUserList() ([]UserInfo, error) {
 	return userlist.Users, nil
 }
 
-// GetUserAlive will fetch the alive_ip count for users
 func (c *Client) GetUserAlive() (map[int]int, error) {
 	c.AliveMap = &AliveMap{}
 	c.AliveMap.Alive = make(map[int]int)
@@ -92,7 +89,6 @@ type UserTraffic struct {
 	Download int64 `json:"download"`
 }
 
-// ReportUserTraffic reports the user traffic
 func (c *Client) ReportUserTraffic(userTraffic *[]UserTraffic) error {
 	traffic := make([]UserTraffic, 0)
 	for _, t := range *userTraffic {

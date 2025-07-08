@@ -17,7 +17,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
-	github.com/xtls/xray-core v1.250516.1-0.20250608135303-fbae89d017ae
+	github.com/xtls/xray-core v1.250608.1-0.20250623124727-cb1afb33e68c
 	golang.org/x/crypto v0.39.0
 	golang.org/x/sys v0.33.0
 	google.golang.org/protobuf v1.36.6

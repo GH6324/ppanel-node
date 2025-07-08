@@ -51,7 +51,10 @@ func getInboundOptions(tag string, info *panel.NodeInfo, c *conf.Options) (optio
 		port = uint16(info.Common.Hysteria2.Port)
 		security = "tls"
 		servername = info.Common.Hysteria2.SecurityConfig.SNI
-
+	case "anytls":
+		port = uint16(info.Common.AnyTLS.Port)
+		security = "tls"
+		servername = info.Common.AnyTLS.SecurityConfig.SNI
 	default:
 		fmt.Println("Unknown protocol:", info.Common.Protocol)
 	}
@@ -342,6 +345,14 @@ func getInboundOptions(tag string, info *panel.NodeInfo, c *conf.Options) (optio
 		in.Type = "tuic"
 		tls.ALPN = append(tls.ALPN, "h3")
 		in.Options = &option.TUICInboundOptions{
+			ListenOptions: listen,
+			InboundTLSOptionsContainer: option.InboundTLSOptionsContainer{
+				TLS: &tls,
+			},
+		}
+	case "anytls":
+		in.Type = "anytls"
+		in.Options = &option.AnyTLSInboundOptions{
 			ListenOptions: listen,
 			InboundTLSOptionsContainer: option.InboundTLSOptionsContainer{
 				TLS: &tls,
