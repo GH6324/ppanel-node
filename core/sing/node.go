@@ -31,11 +31,15 @@ func getInboundOptions(tag string, info *panel.NodeInfo, c *conf.Options) (optio
 	case "vless":
 		port = uint16(info.Common.Vless.Port)
 		security = info.Common.Vless.Security
-		servername = info.Common.Vless.SecurityConfig.SNI
+		if security == "tls" || security == "reality" {
+			servername = info.Common.Vless.SecurityConfig.SNI
+		}
 	case "vmess":
 		port = uint16(info.Common.Vmess.Port)
 		security = info.Common.Vmess.Security
-		servername = info.Common.Vmess.SecurityConfig.SNI
+		if security == "tls" || security == "reality" {
+			servername = info.Common.Vmess.SecurityConfig.SNI
+		}
 	case "trojan":
 		port = uint16(info.Common.Trojan.Port)
 		security = "tls"
