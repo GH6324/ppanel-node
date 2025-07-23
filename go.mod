@@ -17,7 +17,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
-	github.com/xtls/xray-core v1.250608.1-0.20250723105259-dbd912568602
+	github.com/xtls/xray-core v1.250608.1-0.20250723125505-d141d01d0cff
 	golang.org/x/crypto v0.40.0
 	golang.org/x/sys v0.34.0
 	google.golang.org/protobuf v1.36.6
@@ -277,7 +277,7 @@ require (
 	github.com/vultr/govultr/v3 v3.9.1 // indirect
 	github.com/wyx2685/sing-vmess v0.0.0-20250723121437-95d5ab59ff92 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
-	github.com/xtls/reality v0.0.0-20250723115123-fadd8146daab // indirect
+	github.com/xtls/reality v0.0.0-20250723121014-c6320729d93b // indirect
 	github.com/yandex-cloud/go-genproto v0.0.0-20241101135610-76a0cfc1a773 // indirect
 	github.com/yandex-cloud/go-sdk v0.0.0-20241101143304-947cf519f6bd // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
@@ -324,4 +324,4 @@ require (
 
 //replace github.com/sagernet/sing-box v1.10.3 => /root/sing-box_mod
 
-replace github.com/sagernet/sing-box v1.12.0 => github.com/wyx2685/sing-box_mod v1.12.0-rc.2
+replace github.com/sagernet/sing-box v1.12.0 => github.com/wyx2685/sing-box_mod v1.12.0-rc.2.1
