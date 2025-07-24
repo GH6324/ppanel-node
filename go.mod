@@ -17,7 +17,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
-	github.com/xtls/xray-core v1.250608.1-0.20250723125505-d141d01d0cff
+	github.com/xtls/xray-core v1.250608.1-0.20250724020803-26de58933f04
 	golang.org/x/crypto v0.40.0
 	golang.org/x/sys v0.34.0
 	google.golang.org/protobuf v1.36.6
@@ -324,4 +324,4 @@ require (
 
 //replace github.com/sagernet/sing-box v1.10.3 => /root/sing-box_mod
 
-replace github.com/sagernet/sing-box v1.12.0 => github.com/wyx2685/sing-box_mod v1.12.0-rc.2.1
+replace github.com/sagernet/sing-box v1.12.0 => github.com/wyx2685/sing-box_mod v1.12.0-rc.2.2
