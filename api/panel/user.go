@@ -36,6 +36,7 @@ func (c *Client) GetUserList() ([]UserInfo, error) {
 	r, err := c.client.R().
 		SetHeader("If-None-Match", c.userEtag).
 		ForceContentType("application/json").
+		SetDoNotParseResponse(true).
 		Get(path)
 	if r == nil || r.RawResponse == nil {
 		return nil, fmt.Errorf("received nil response or raw response")
