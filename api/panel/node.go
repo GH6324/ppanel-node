@@ -3,12 +3,11 @@ package panel
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"strconv"
 	"time"
-
-	"github.com/goccy/go-json"
 )
 
 type NodeInfo struct {

@@ -1,13 +1,12 @@
 package conf
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 
 	"github.com/perfect-panel/ppanel-node/common/json5"
-
-	"github.com/goccy/go-json"
 )
 
 type Conf struct {

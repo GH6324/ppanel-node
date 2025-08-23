@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"sync"
 
 	"github.com/sagernet/sing-box/include"
 	"github.com/sagernet/sing-box/log"
@@ -29,6 +30,12 @@ type Sing struct {
 	hookServer *HookServer
 	router     adapter.Router
 	logFactory log.Factory
+	users      *UserMap
+}
+
+type UserMap struct {
+	uidMap  map[string]int
+	mapLock sync.RWMutex
 }
 
 func init() {
@@ -79,6 +86,9 @@ func New(c *conf.CoreConfig) (vCore.Core, error) {
 		hookServer: hs,
 		router:     b.Router(),
 		logFactory: b.LogFactory(),
+		users: &UserMap{
+			uidMap: make(map[string]int),
+		},
 	}, nil
 }
 

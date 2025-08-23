@@ -1,13 +1,13 @@
 package conf
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"strings"
 
-	"github.com/goccy/go-json"
 	"github.com/perfect-panel/ppanel-node/common/json5"
 )
 

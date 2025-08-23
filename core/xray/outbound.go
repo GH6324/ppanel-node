@@ -1,9 +1,9 @@
 package xray
 
 import (
+	"encoding/json"
 	"fmt"
 
-	"github.com/goccy/go-json"
 	conf2 "github.com/perfect-panel/ppanel-node/conf"
 	"github.com/xtls/xray-core/core"
 	"github.com/xtls/xray-core/infra/conf"

@@ -3,7 +3,8 @@ package panel
 import (
 	"fmt"
 
-	"github.com/goccy/go-json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 )
 
 type OnlineUser struct {
@@ -49,8 +50,33 @@ func (c *Client) GetUserList() ([]UserInfo, error) {
 		return nil, err
 	}
 	userlist := &UserListBody{}
-	if err := json.Unmarshal(r.Body(), userlist); err != nil {
-		return nil, fmt.Errorf("unmarshal user list error: %w", err)
+	dec := jsontext.NewDecoder(r.RawResponse.Body)
+	for {
+		tok, err := dec.ReadToken()
+		if err != nil {
+			return nil, fmt.Errorf("decode user list error: %w", err)
+		}
+		if tok.Kind() == '"' && tok.String() == "users" {
+			break
+		}
+	}
+	tok, err := dec.ReadToken()
+	if err != nil {
+		return nil, fmt.Errorf("decode user list error: %w", err)
+	}
+	if tok.Kind() != '[' {
+		return nil, fmt.Errorf(`decode user list error: expected "users" array`)
+	}
+	for dec.PeekKind() != ']' {
+		val, err := dec.ReadValue()
+		if err != nil {
+			return nil, fmt.Errorf("decode user list error: read user object: %w", err)
+		}
+		var u UserInfo
+		if err := json.Unmarshal(val, &u); err != nil {
+			return nil, fmt.Errorf("decode user list error: unmarshal user error: %w", err)
+		}
+		userlist.Users = append(userlist.Users, u)
 	}
 	c.userEtag = r.Header().Get("ETag")
 	return userlist.Users, nil

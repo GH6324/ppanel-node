@@ -1,11 +1,11 @@
 package xray
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"sync"
 
-	"github.com/goccy/go-json"
 	"github.com/perfect-panel/ppanel-node/conf"
 	vCore "github.com/perfect-panel/ppanel-node/core"
 	"github.com/perfect-panel/ppanel-node/core/xray/app/dispatcher"
@@ -36,10 +36,21 @@ type Xray struct {
 	ohm        outbound.Manager
 	shm        statsFeature.Manager
 	dispatcher *dispatcher.DefaultDispatcher
+	users      *UserMap
+}
+
+type UserMap struct {
+	uidMap  map[string]int
+	mapLock sync.RWMutex
 }
 
 func New(c *conf.CoreConfig) (vCore.Core, error) {
-	return &Xray{Server: getCore(c.XrayConfig)}, nil
+	return &Xray{
+		Server: getCore(c.XrayConfig),
+		users: &UserMap{
+			uidMap: make(map[string]int),
+		},
+	}, nil
 }
 
 func parseConnectionConfig(c *conf.XrayConnectionConfig) (policy *coreConf.Policy) {
