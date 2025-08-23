@@ -153,6 +153,7 @@ func (c *Client) GetNodeInfo() (node *NodeInfo, err error) {
 	} else {
 		return nil, fmt.Errorf("received nil response")
 	}
+	//nodes := []NodeInfo{}
 	node = &NodeInfo{
 		Id:     c.NodeId,
 		Type:   c.NodeType,
