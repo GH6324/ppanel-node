@@ -8,6 +8,7 @@ import (
 	"github.com/perfect-panel/ppanel-node/common/counter"
 	"github.com/perfect-panel/ppanel-node/common/format"
 	vCore "github.com/perfect-panel/ppanel-node/core"
+	"github.com/perfect-panel/ppanel-node/core/xray/app/dispatcher"
 	"github.com/xtls/xray-core/common/protocol"
 	"github.com/xtls/xray-core/proxy"
 )
@@ -43,8 +44,15 @@ func (c *Xray) DelUsers(users []panel.UserInfo, tag string) error {
 			return err
 		}
 		delete(c.users.uidMap, user)
-		c.dispatcher.Counter.Delete(user)
-		c.dispatcher.Wm.RemoveWritersForUser(user)
+		if v, ok := c.dispatcher.Counter.Load(tag); ok {
+			tc := v.(*counter.TrafficCounter)
+			tc.Delete(user)
+		}
+		if v, ok := c.dispatcher.LinkManagers.Load(user); ok {
+			lm := v.(*dispatcher.LinkManager)
+			lm.CloseAll()
+			c.dispatcher.LinkManagers.Delete(user)
+		}
 	}
 	return nil
 }
