@@ -28,7 +28,6 @@ type ApiConfig struct {
 	Key          string `json:"ApiKey"`
 	NodeType     string `json:"NodeType"`
 	Timeout      int    `json:"Timeout"`
-	RuleListPath string `json:"RuleListPath"`
 }
 
 func (n *NodeConfig) UnmarshalJSON(data []byte) (err error) {

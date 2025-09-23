@@ -125,7 +125,7 @@ func (b *Sing) GetUserTrafficSlice(tag string, reset bool) ([]panel.UserTraffic,
 			traffic := value.(*counter.TrafficStorage)
 			up := traffic.UpCounter.Load()
 			down := traffic.DownCounter.Load()
-			if up+down >= 0 {
+			if up+down > 0 {
 				if reset {
 					traffic.UpCounter.Store(0)
 					traffic.DownCounter.Store(0)
@@ -176,6 +176,10 @@ func (b *Sing) DelUsers(users []panel.UserInfo, tag string) error {
 	b.users.mapLock.Lock()
 	defer b.users.mapLock.Unlock()
 	for i := range users {
+		if v, ok := b.hookServer.counter.Load(tag); ok {
+			c := v.(*counter.TrafficCounter)
+			c.Delete(users[i].Uuid)
+		}
 		delete(b.users.uidMap, users[i].Uuid)
 		uuids[i] = users[i].Uuid
 	}

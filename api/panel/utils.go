@@ -2,17 +2,18 @@ package panel
 
 import (
 	"fmt"
+	"path"
+
 	"github.com/go-resty/resty/v2"
-	path2 "path"
 )
 
 // Debug set the client debug for client
 func (c *Client) Debug() {
-	c.client.SetDebug(true)
+	c.Client.SetDebug(true)
 }
 
-func (c *Client) assembleURL(path string) string {
-	return path2.Join(c.APIHost + path)
+func (c *Client) assembleURL(p string) string {
+	return path.Join(c.APIHost + p)
 }
 func (c *Client) checkResponse(res *resty.Response, path string, err error) error {
 	if err != nil {

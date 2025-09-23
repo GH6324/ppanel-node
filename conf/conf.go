@@ -10,9 +10,17 @@ import (
 )
 
 type Conf struct {
-	LogConfig   LogConfig    `json:"Log"`
-	CoresConfig []CoreConfig `json:"Cores"`
-	NodeConfig  []NodeConfig `json:"Nodes"`
+	LogConfig   LogConfig       `json:"Log"`
+	CoresConfig []CoreConfig    `json:"Cores"`
+	NodeConfig  []NodeConfig    `json:"Nodes"`
+	ApiConfig   ServerApiConfig `json:"Api"`
+}
+
+type ServerApiConfig struct {
+	ApiHost   string `json:"ApiHost"`
+	ServerId  int    `json:"ServerID"`
+	SecretKey string `json:"SecretKey"`
+	Timeout   int    `json:"Timeout"`
 }
 
 func New() *Conf {

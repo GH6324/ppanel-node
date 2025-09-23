@@ -39,12 +39,9 @@ type BasicConfig struct {
 
 type SecurityConfig struct {
 	SNI                  string `json:"sni"`
-	AllowInsecure        *bool  `json:"allow_insecure"`
-	Fingerprint          string `json:"fingerprint"`
 	RealityServerAddress string `json:"reality_server_addr"`
 	RealityServerPort    int    `json:"reality_server_port"`
 	RealityPrivateKey    string `json:"reality_private_key"`
-	RealityPublicKey     string `json:"reality_public_key"`
 	RealityShortId       string `json:"reality_short_id"`
 	RealityMldsa65seed   string `json:"reality_mldsa65seed"`
 }
@@ -53,6 +50,8 @@ type TransportConfig struct {
 	Path                 string `json:"path"`
 	Host                 string `json:"host"`
 	ServiceName          string `json:"service_name"`
+	Mode                 string `json:"mode"`
+	Extra                string `json:"extra"`
 	DisableSNI           bool   `json:"disable_sni"`
 	ReduceRtt            bool   `json:"reduce_rtt"`
 	UDPRelayMode         string `json:"udp_relay_mode"`
@@ -93,6 +92,7 @@ type TrojanNode struct {
 type AnyTLSNode struct {
 	Port           int             `json:"port"`
 	SecurityConfig *SecurityConfig `json:"security_config"`
+	PaddingScheme  string          `json:"padding_scheme"`
 }
 
 type TuicNode struct {
@@ -102,9 +102,9 @@ type TuicNode struct {
 
 type Hysteria2Node struct {
 	Port           int             `json:"port"`
-	HopPorts       string          `json:"hop_ports"`
-	HopInterval    int             `json:"hop_interval"`
 	ObfsPassword   string          `json:"obfs_password"`
+	UpMbps         int             `json:"up_mbps"`
+	DownMbps       int             `json:"down_mbps"`
 	SecurityConfig *SecurityConfig `json:"security_config"`
 }
 
@@ -124,7 +124,7 @@ type NodeStatus struct {
 
 func (c *Client) GetNodeInfo() (node *NodeInfo, err error) {
 	const path = "/v1/server/config"
-	r, err := c.client.
+	r, err := c.Client.
 		R().
 		SetHeader("If-None-Match", c.nodeEtag).
 		ForceContentType("application/json").
@@ -153,7 +153,6 @@ func (c *Client) GetNodeInfo() (node *NodeInfo, err error) {
 	} else {
 		return nil, fmt.Errorf("received nil response")
 	}
-	//nodes := []NodeInfo{}
 	node = &NodeInfo{
 		Id:     c.NodeId,
 		Type:   c.NodeType,
@@ -223,7 +222,7 @@ func (c *Client) ReportNodeStatus(nodeStatus *NodeStatus) (err error) {
 		Disk:      nodeStatus.Disk,
 		UpdatedAt: time.Now().UnixMilli(),
 	}
-	if _, err = c.client.R().SetBody(status).ForceContentType("application/json").Post(path); err != nil {
+	if _, err = c.Client.R().SetBody(status).ForceContentType("application/json").Post(path); err != nil {
 		return fmt.Errorf("request %s failed: %v", c.assembleURL(path), err.Error())
 	}
 	return nil

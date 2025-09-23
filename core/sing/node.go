@@ -378,6 +378,14 @@ func getInboundOptions(tag string, info *panel.NodeInfo, c *conf.Options) (optio
 				TLS: &tls,
 			},
 		}
+		if info.Common.Hysteria2.UpMbps == 0 && info.Common.Hysteria2.DownMbps == 0 {
+			in.Options.(*option.Hysteria2InboundOptions).IgnoreClientBandwidth = true
+		} else {
+			ino := in.Options.(*option.Hysteria2InboundOptions)
+			ino.UpMbps = info.Common.Hysteria2.UpMbps
+			ino.DownMbps = info.Common.Hysteria2.DownMbps
+			ino.IgnoreClientBandwidth = false
+		}
 	}
 	return in, nil
 }

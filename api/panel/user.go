@@ -33,7 +33,7 @@ type AliveMap struct {
 
 func (c *Client) GetUserList() ([]UserInfo, error) {
 	const path = "/v1/server/user"
-	r, err := c.client.R().
+	r, err := c.Client.R().
 		SetHeader("If-None-Match", c.userEtag).
 		ForceContentType("application/json").
 		SetDoNotParseResponse(true).
@@ -129,7 +129,7 @@ func (c *Client) ReportUserTraffic(userTraffic *[]UserTraffic) error {
 	req := ServerPushUserTrafficRequest{
 		Traffic: traffic,
 	}
-	r, err := c.client.R().
+	r, err := c.Client.R().
 		SetBody(req).
 		ForceContentType("application/json").
 		Post(path)
@@ -145,7 +145,7 @@ func (c *Client) ReportNodeOnlineUsers(data *[]OnlineUser) error {
 	users := UserOnlineBody{
 		Users: *data,
 	}
-	r, err := c.client.R().
+	r, err := c.Client.R().
 		SetBody(users).
 		ForceContentType("application/json").
 		Post(path)

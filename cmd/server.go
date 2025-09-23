@@ -76,16 +76,18 @@ func serverHandle(_ *cobra.Command, _ []string) {
 	defer vc.Close()
 	log.Info("Core ", vc.Type(), " started")
 	nodes := node.New()
-	err = nodes.Start(c.NodeConfig, vc)
+	if c.ApiConfig.ApiHost != "" && c.ApiConfig.ServerId != 0 && c.ApiConfig.SecretKey != "" && len(c.NodeConfig) == 0 {
+		err = nodes.StartNodes(&c.ApiConfig, vc)
+	} else {
+		err = nodes.Start(c.NodeConfig, vc)
+	}
 	if err != nil {
 		log.WithField("err", err).Error("Run nodes failed")
 		return
 	}
 	log.Info("Nodes started")
-	xdns := os.Getenv("XRAY_DNS_PATH")
-	sdns := os.Getenv("SING_DNS_PATH")
 	if watch {
-		err = c.Watch(config, xdns, sdns, func() {
+		err = c.Watch(config, func() {
 			nodes.Close()
 			err = vc.Close()
 			if err != nil {
@@ -103,7 +105,11 @@ func serverHandle(_ *cobra.Command, _ []string) {
 				return
 			}
 			log.Info("Core ", vc.Type(), " restarted")
-			err = nodes.Start(c.NodeConfig, vc)
+			if c.ApiConfig.ApiHost != "" && c.ApiConfig.ServerId != 0 && c.ApiConfig.SecretKey != "" && len(c.NodeConfig) == 0 {
+				err = nodes.StartNodes(&c.ApiConfig, vc)
+			} else {
+				err = nodes.Start(c.NodeConfig, vc)
+			}
 			if err != nil {
 				log.WithField("err", err).Error("Run nodes failed")
 				return
