@@ -21,7 +21,7 @@ func buildSSUsers(tag string, userInfo []panel.UserInfo, cypher string, serverKe
 }
 
 func buildSSUser(tag string, userInfo *panel.UserInfo, cypher string, serverKey string) (user *protocol.User) {
-	if serverKey == "" {
+	if !strings.Contains(cypher, "2022") {
 		ssAccount := &shadowsocks.Account{
 			Password:   userInfo.Uuid,
 			CipherType: getCipherFromString(cypher),
