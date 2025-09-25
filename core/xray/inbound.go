@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/perfect-panel/ppanel-node/api/panel"
 	"github.com/perfect-panel/ppanel-node/conf"
@@ -328,7 +329,7 @@ func buildShadowsocks(config *conf.Options, nodeInfo *panel.NodeInfo, inbound *c
 	}
 	randomPasswd := hex.EncodeToString(p)
 	cipher := s.Cipher
-	if s.ServerKey != "" {
+	if s.ServerKey != "" && strings.Contains(s.Cipher, "2022") {
 		settings.Password = s.ServerKey
 		randomPasswd = base64.StdEncoding.EncodeToString([]byte(randomPasswd))
 		cipher = ""
