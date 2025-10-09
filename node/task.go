@@ -38,7 +38,7 @@ func (c *Controller) startTasks(node *panel.NodeInfo) {
 		security = ""
 	case "tuic":
 		security = "tls"
-	case "hysteria2":
+	case "hysteria", "hysteria2":
 		security = "tls"
 	default:
 		security = ""
@@ -140,7 +140,7 @@ func (c *Controller) nodeInfoMonitor() (err error) {
 			security = ""
 		case "tuic":
 			security = "tls"
-		case "hysteria2":
+		case "hysteria", "hysteria2":
 			security = "tls"
 		default:
 			security = ""

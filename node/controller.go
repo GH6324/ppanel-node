@@ -80,7 +80,7 @@ func (c *Controller) Start() error {
 		security = ""
 	case "tuic":
 		security = "tls"
-	case "hysteria2":
+	case "hysteria", "hysteria2":
 		security = "tls"
 	default:
 		security = ""

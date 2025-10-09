@@ -51,7 +51,7 @@ func getInboundOptions(tag string, info *panel.NodeInfo, c *conf.Options) (optio
 		port = uint16(info.Common.Tuic.Port)
 		security = "tls"
 		servername = info.Common.Tuic.SecurityConfig.SNI
-	case "hysteria2":
+	case "hysteria", "hysteria2":
 		port = uint16(info.Common.Hysteria2.Port)
 		security = "tls"
 		servername = info.Common.Hysteria2.SecurityConfig.SNI
@@ -362,7 +362,7 @@ func getInboundOptions(tag string, info *panel.NodeInfo, c *conf.Options) (optio
 				TLS: &tls,
 			},
 		}
-	case "hysteria2":
+	case "hysteria", "hysteria2":
 		in.Type = "hysteria2"
 		var obfs *option.Hysteria2Obfs
 		if info.Common.Hysteria2.ObfsPassword != "" {

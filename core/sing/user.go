@@ -164,7 +164,7 @@ func (b *Sing) DelUsers(users []panel.UserInfo, tag string) error {
 			del = i.(*trojan.Inbound)
 		case "tuic":
 			del = i.(*tuic.Inbound)
-		case "hysteria2":
+		case "hysteria", "hysteria2":
 			del = i.(*hysteria2.Inbound)
 		case "anytls":
 			del = i.(*anytls.Inbound)

@@ -125,7 +125,7 @@ func (n *Node) StartNodes(apiConfig *conf.ServerApiConfig, core vCore.Core) erro
 					SNI: p.SNI,
 				},
 			}
-		case "hysteria2":
+		case "hysteria", "hysteria2":
 			node.Common.Hysteria2 = &panel.Hysteria2Node{
 				Port:         p.Port,
 				ObfsPassword: p.ObfsPassword,
@@ -153,7 +153,7 @@ func (n *Node) StartNodes(apiConfig *conf.ServerApiConfig, core vCore.Core) erro
 		}
 		var coretype string
 		switch node.Type {
-		case "tuic", "hysteria2", "anytls":
+		case "tuic", "hysteria", "hysteria2", "anytls":
 			coretype = "sing"
 			nodeoptions.ListenIP = "::"
 		case "vmess", "vless", "trojan", "shadowsocks":

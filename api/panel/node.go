@@ -183,7 +183,7 @@ func (c *Client) GetNodeInfo() (node *NodeInfo, err error) {
 	case "tuic":
 		node.Common.Tuic = &TuicNode{}
 		err = json.Unmarshal(node.Common.Config, node.Common.Tuic)
-	case "hysteria2":
+	case "hysteria", "hysteria2":
 		node.Common.Hysteria2 = &Hysteria2Node{}
 		err = json.Unmarshal(node.Common.Config, node.Common.Hysteria2)
 	case "anytls":
